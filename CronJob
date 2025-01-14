@@ -1,0 +1,40 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name:  cxs-core-monitoring-cron-job
+  namespace: sweet
+spec:
+  schedule: '4/15 * * * *'
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: cxs-core-monitor
+              image: docker.example.com/sweet/cxs-core-monitoring
+              command: [ "python", "main.py" ]
+              env:
+                - name: CXS_CORE_URL
+                  value: https://cxs-core-data-master:9000
+                - name: CXS_CORE_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: cxs-core-access
+                      key: username
+                - name: CXS_CORE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cxs-core-access
+                      key: password
+                - name: SSL_CERT_ALLOW_SELF_SIGNED
+                  value: "true"
+              imagePullPolicy: IfNotPresent
+          imagePullSecrets:
+            - name: docker-example-com-credentials
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
