@@ -1,4 +1,4 @@
-IMAGE_NAME=docker.moresophy.com/contextsuite/monitoring/cxs-core-monitoring
+IMAGE_NAME=docker.example.com/sweet/monitoring/cxs-core-monitoring
 TAG=latest
 
 all: build push
