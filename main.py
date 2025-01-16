@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     # Initialize the OpenSearch client with environment variables for configuration.
     client = OpenSearch(
-        os.getenv('CXS_CORE_URL', 'https://example-opensearch-url:9200'),  # Replace with your OpenSearch URL.
+        os.getenv('CXS_CORE_URL', 'https://example-opensearch-url:9000'),  # Replace with your OpenSearch URL.
         http_auth=(
             os.getenv('CXS_CORE_USERNAME', 'your_username'),  # Replace with your username.
             os.getenv('CXS_CORE_PASSWORD', 'your_password')   # Replace with your password.
